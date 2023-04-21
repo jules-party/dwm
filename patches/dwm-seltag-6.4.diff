@@ -1,0 +1,38 @@
+From ae0809ece2131115176d0c8a3af4b7997807daea Mon Sep 17 00:00:00 2001
+From: jule <news.fo1xa@slmail.me>
+Date: Wed, 19 Apr 2023 23:21:54 -0400
+Subject: [PATCH] add select tag
+
+---
+ config.def.h | 1 +
+ dwm.c        | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/config.def.h b/config.def.h
+index 9efa774..5f8b385 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -20,6 +20,7 @@ static const char *colors[][3]      = {
+ 
+ /* tagging */
+ static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
++static const char *tagssel = { "!", "@", "#", "$", "%", "^", "&", "*", "(" };
+ 
+ static const Rule rules[] = {
+ 	/* xprop(1):
+diff --git a/dwm.c b/dwm.c
+index f1d86b2..6c15b9b 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -723,7 +723,7 @@ drawbar(Monitor *m)
+ 	for (i = 0; i < LENGTH(tags); i++) {
+ 		w = TEXTW(tags[i]);
+ 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
+-		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
++		drw_text(drw, x, 0, w, bh, lrpad / 2, (m->tagset[m->seltags] & 1 << i ? tagssel[i] : tags[i]), urg & 1 << i);
+ 		if (occ & 1 << i)
+ 			drw_rect(drw, x + boxs, boxs, boxw, boxw,
+ 				m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
+-- 
+2.40.0
+
